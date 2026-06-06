@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Market Chart Pro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+    <!-- Header -->
+    <header id="header">
+        <div class="h-left">
+            <div class="logo">📊 <b>MarketChart</b></div>
+        </div>
+        <div class="h-center">
+            <div class="symbol-sel" id="symbolSel">
+                <button id="symBtn" class="sym-btn">
+                    <span id="symName">BTC/USDT</span>
+                    <span id="symPrice" class="mono">—</span>
+                    <span id="symChange" class="badge">—</span>
+                    <span class="caret">▾</span>
+                </button>
+                <div class="sym-drop" id="symDrop">
+                    <input id="symSearch" placeholder="جستجو..." autocomplete="off" spellcheck="false">
+                    <div class="sym-tabs">
+                        <button class="sym-tab active" data-m="crypto">کریپتو</button>
+                        <button class="sym-tab" data-m="forex">فارکس</button>
+                        <button class="sym-tab" data-m="stock">سهام</button>
+                    </div>
+                    <div id="symList" class="sym-items"></div>
+                </div>
+            </div>
+        </div>
+        <div class="h-right">
+            <div class="stats" id="stats">
+                <div class="stat"><span class="stat-l">24h High</span><span id="sHigh" class="stat-v mono">—</span></div>
+                <div class="stat"><span class="stat-l">24h Low</span><span id="sLow" class="stat-v mono">—</span></div>
+                <div class="stat"><span class="stat-l">Volume</span><span id="sVol" class="stat-v mono">—</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Toolbar -->
+    <div id="toolbar">
+        <div class="tb-left">
+            <div class="tf-bar" id="tfBar">
+                <button class="tf" data-i="1m">1m</button><button class="tf" data-i="3m">3m</button>
+                <button class="tf" data-i="5m">5m</button><button class="tf" data-i="15m">15m</button>
+                <button class="tf" data-i="30m">30m</button><button class="tf active" data-i="1h">1H</button>
+                <button class="tf" data-i="2h">2H</button><button class="tf" data-i="4h">4H</button>
+                <button class="tf" data-i="6h">6H</button><button class="tf" data-i="12h">12H</button>
+                <button class="tf" data-i="1d">1D</button><button class="tf" data-i="1w">1W</button>
+                <button class="tf" data-i="1M">1M</button>
+            </div>
+            <div class="tb-sep"></div>
+            <div class="ct-bar">
+                <button class="ct active" data-t="candlestick" title="Candlestick"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="4" width="4" height="8" rx=".5" fill="currentColor"/><line x1="4" y1="1" x2="4" y2="4" stroke="currentColor" stroke-width="1.2"/><line x1="4" y1="12" x2="4" y2="15" stroke="currentColor" stroke-width="1.2"/><rect x="10" y="5" width="4" height="7" rx=".5" fill="none" stroke="currentColor" stroke-width="1.2"/><line x1="12" y1="2" x2="12" y2="5" stroke="currentColor" stroke-width="1.2"/><line x1="12" y1="12" x2="12" y2="15" stroke="currentColor" stroke-width="1.2"/></svg></button>
+                <button class="ct" data-t="ohlc" title="OHLC Bar"><svg width="16" height="16" viewBox="0 0 16 16"><line x1="4" y1="1" x2="4" y2="15" stroke="currentColor" stroke-width="1.2"/><line x1="2" y1="4" x2="4" y2="4" stroke="currentColor" stroke-width="1.2"/><line x1="4" y1="11" x2="6" y2="11" stroke="currentColor" stroke-width="1.2"/><line x1="12" y1="3" x2="12" y2="14" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="6" x2="12" y2="6" stroke="currentColor" stroke-width="1.2"/><line x1="12" y1="10" x2="14" y2="10" stroke="currentColor" stroke-width="1.2"/></svg></button>
+                <button class="ct" data-t="line" title="Line"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M1 12 L5 6 L9 9 L15 3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <button class="ct" data-t="area" title="Area"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M1 12 L5 6 L9 9 L15 3 V14 H1 Z" fill="currentColor" opacity=".15"/><path d="M1 12 L5 6 L9 9 L15 3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></button>
+                <button class="ct" data-t="heikinashi" title="Heikin Ashi"><svg width="16" height="16" viewBox="0 0 16 16"><rect x="2" y="4" width="4" height="8" rx=".5" fill="currentColor" opacity=".5"/><line x1="4" y1="1" x2="4" y2="4" stroke="currentColor" stroke-width="1"/><line x1="4" y1="12" x2="4" y2="15" stroke="currentColor" stroke-width="1"/><rect x="10" y="2" width="4" height="10" rx=".5" fill="currentColor" opacity=".5"/><line x1="12" y1="0" x2="12" y2="2" stroke="currentColor" stroke-width="1"/><line x1="12" y1="12" x2="12" y2="15" stroke="currentColor" stroke-width="1"/></svg></button>
+            </div>
+        </div>
+        <div class="tb-right">
+            <button class="tb-btn" id="btnTheme" title="تم">🌙</button>
+            <button class="tb-btn" id="btnFs" title="تمام صفحه">⛶</button>
+        </div>
+    </div>
+
+    <!-- Chart -->
+    <div id="chartArea">
+        <div id="chartMain">
+            <canvas id="cvMain"></canvas>
+            <canvas id="cvVol"></canvas>
+            <div id="ohlcInfo" class="ohlc-info"></div>
+            <div id="chPriceTag" class="ch-tag-price"></div>
+            <div id="chTimeTag" class="ch-tag-time"></div>
+            <div id="loadBox" class="overlay"><div class="spin"></div>بارگذاری...</div>
+            <div id="errBox" class="overlay" style="display:none"><div id="errMsg"></div><button id="retryBtn">تلاش مجدد</button></div>
+        </div>
+        <div id="priceAxis"><canvas id="cvPA"></canvas></div>
+    </div>
+    <div id="timeRow">
+        <div id="timeAxis"><canvas id="cvTA"></canvas></div>
+        <div id="corner"></div>
+    </div>
+    <div id="statusBar">
+        <span id="sbMarket">کریپتو</span>
+        <span id="sbTf">1H</span>
+        <span id="sbCount">—</span>
+        <span class="flex1"></span>
+        <span id="sbClock"></span>
+    </div>
+</div>
+<script src="js/api.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/controls.js"></script>
+</body>
+</html>
